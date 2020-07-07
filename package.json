@@ -1,0 +1,19 @@
+{
+  "name": "directory-organizer",
+  "version": "1.0.0",
+  "description": "It organizes messed up directory",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ratnadeep5050/Directory-Organizer.git"
+  },
+  "author": "Ratnadeep",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ratnadeep5050/Directory-Organizer/issues"
+  },
+  "homepage": "https://github.com/Ratnadeep5050/Directory-Organizer#readme"
+}
