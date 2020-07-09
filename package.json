@@ -4,7 +4,8 @@
   "description": "It organizes messed up directory",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test-dev": "node index.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Ratnadeep5050/Directory-Organizer/issues"
   },
-  "homepage": "https://github.com/Ratnadeep5050/Directory-Organizer#readme"
+  "homepage": "https://github.com/Ratnadeep5050/Directory-Organizer#readme",
+  "devDependencies": {
+    "jest": "^26.1.0"
+  }
 }
