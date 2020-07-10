@@ -17,7 +17,7 @@ exports.areAllDirectories = function(path) {
        var filename = files[i];
        var filenameArray = filename.split(".");
 
-       if(fs.statSync(filename).isDirectory()) {
+       if(fs.statSync(path+filename).isDirectory()) {
             directoryCount++;
        }
    }
@@ -35,8 +35,27 @@ exports.createDirectory = function(path) {
     var fileTypesArray = Array.from(fileTypes);
 
     for(let i=0; i<fileTypesArray.length; i++) {
-        fs.mkdirSync(path+"/"+fileTypesArray[i]);
+        var directoryExists = this.directoryExists(path, fileTypesArray[i]);
+        
+        if(!directoryExists) {
+            fs.mkdirSync(path+"/"+fileTypesArray[i]);
+        }
     }
+}
+
+exports.directoryExists = function(path, dirName) {
+    var files = fs.readdirSync(path);
+    
+    for(let i=0; i<files.length; i++) {
+        var filename = files[i];
+        if(filename == dirName) {
+            if(fs.statSync(path+"/"+dirName).isDirectory()) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 exports.checkFileTypes = function(path) {
@@ -46,27 +65,32 @@ exports.checkFileTypes = function(path) {
         var filename = files[i];
         var filenameArray = filename.split(".");
 
-        if(!fs.statSync(filename).isDirectory()) {
+        if(!fs.statSync(path+filename).isDirectory()) {
             fileType.add(filenameArray[1]);
         }
     }
     return fileType;
 }
 
-exports.moveToDirectory = function(path, file) {
+exports.moveFiles = function(path) {
+    var files = fs.readdirSync(path);
+    var fileTypes = this.checkFileTypes(path);
+    var fileTypesArray = Array.from(fileTypes);
+    
+    for(let i=0; i<files.length; i++) {
+        var filename = files[i];
+        var filenameArray = filename.split(".");
+        var fileType = filenameArray[1];
 
+        if(!fs.statSync(path+"/"+filename).isDirectory()) {
+            if(filenameArray[0] != "") {
+                var currentPath = path+"/"+filename;
+                var destinationPath = path+"/"+fileType+"/"+filename;
+                
+                fs.renameSync(currentPath, destinationPath);
+            }
+        }
+    }
 }
 
-/*
-var directoryExists = function(path) {
-    return fs.readdirSync(path).filter(function(file) {
-        console.log(fs.statSync(path+file).isDirectory());
-    });
-}
-*/
 
-exports.directoryExists = function(path) {
-    fs.readdir(path, (err, file) => {
-        console.log(file);
-    });
-}
